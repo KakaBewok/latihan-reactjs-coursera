@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import React, { Component } from 'react';
 import Header from './HeaderComponent';
 import Menu from './MenuComponent';
+import DishDetail from './DishdetailComponent';
 import Home from './HomeComponent';
 import Footer from './FooterComponent';
 import Contact from './ContactComponent';
@@ -9,6 +10,7 @@ import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
+import { useParams } from 'react-router-dom';
 
 class Main extends Component {
   constructor(props) {
@@ -32,6 +34,20 @@ class Main extends Component {
       );
     };
 
+    const DishWithId = () => {
+      let { dishId } = useParams();
+      return (
+        <DishDetail
+          dish={
+            this.state.dishes.filter((dish) => dish.id === parseInt(dishId))[0]
+          }
+          comments={this.state.comments.filter(
+            (comment) => comment.dishId === parseInt(dishId)
+          )}
+        />
+      );
+    };
+
     return (
       <div>
         <Header />
@@ -39,6 +55,7 @@ class Main extends Component {
           <Route path="/contactus" element={<Contact />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/menu" element={<Menu dishes={this.state.dishes} />} />
+          <Route path="/menu/:dishId" element={<DishWithId />} />
         </Routes>
         <Footer />
       </div>

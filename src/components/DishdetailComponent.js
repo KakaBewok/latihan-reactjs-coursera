@@ -1,14 +1,17 @@
 import React from 'react';
 import {
   Card,
-  CardHeader,
-  ListGroup,
-  ListGroupItem,
   CardImg,
+  CardText,
   CardBody,
   CardTitle,
-  CardText,
+  Breadcrumb,
+  BreadcrumbItem,
+  ListGroup,
+  CardHeader,
+  ListGroupItem,
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 function RenderDish({ dish }) {
   return (
@@ -31,7 +34,7 @@ function RenderComments({ comments }) {
         }}
         className="mb-3"
       >
-        <CardHeader>Comment - 0{comment.id + 1}</CardHeader>
+        <CardHeader>Comment</CardHeader>
         <ListGroup flush>
           <ListGroupItem>{comment.comment}</ListGroupItem>
           <ListGroupItem>
@@ -51,20 +54,30 @@ function RenderComments({ comments }) {
 }
 
 const DishDetail = (props) => {
-  if (props.dish != null) {
-    return (
-      <div className="container">
-        <div className="row mt-5">
-          <div className="col-12 col-md-5 m-1 mx-auto">
-            <RenderDish dish={props.dish} />
-          </div>
-          <div className="col-12 col-md-5 m-1 mx-auto">
-            <RenderComments comments={props.dish.comments} />
-          </div>
+  return (
+    <div className="container">
+      <div className="row">
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to="/menu">Menu</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+        </Breadcrumb>
+        <div className="col-12">
+          <h3>{props.dish.name}</h3>
+          <hr />
         </div>
       </div>
-    );
-  } else return <div></div>;
+      <div className="row">
+        <div className="col-12 col-md-5 m-1 mx-auto">
+          <RenderDish dish={props.dish} />
+        </div>
+        <div className="col-12 col-md-5 m-1 mx-auto">
+          <RenderComments comments={props.comments} />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default DishDetail;
