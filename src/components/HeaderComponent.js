@@ -108,6 +108,7 @@ class Header extends Component {
                 alt="Ristorante Con Fusion"
               />
             </NavbarBrand>
+
             <Collapse isOpen={this.state.isNavOpen} navbar>
               <Nav navbar>
                 <NavItem>
@@ -132,7 +133,7 @@ class Header extends Component {
                   </NavLink>
                 </NavItem>
                 <br></br>
-                <Nav className="ml-auto" navbar>
+                <Nav className="me-auto" navbar>
                   <NavItem>
                     <Button outline onClick={this.toggleModal}>
                       <span className="fa fa-sign-in fa-lg"></span> Login
