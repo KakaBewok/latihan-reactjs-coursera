@@ -9,24 +9,40 @@ import {
   Media,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
 
-const RenderLeader = ({ leaders }) => {
-  const leadersList = leaders.map((leader) => {
+const RenderLeader = ({ leaders, isLoading, ErrMess }) => {
+  if (isLoading) {
+    return <Loading />;
+  } else if (ErrMess) {
     return (
-      <Media className="d-flex gap-3 mb-5">
-        <Media left href="#">
-          <Media src={leader.image} alt={leader.name} />
-        </Media>
-        <Media body>
-          <Media heading>{leader.name}</Media>
-          <h6>{leader.designation}</h6>
-          {leader.description}
-        </Media>
-      </Media>
+      <div className="container">
+        <div className="row">
+          <h4>{ErrMess}</h4>
+        </div>
+      </div>
     );
-  });
-
-  return leadersList;
+  } else {
+    return (
+      <div>
+        {leaders.leaders.map((leader) => {
+          return (
+            <Media className="d-flex gap-3 mb-5" key={leader.id}>
+              <Media left href="#">
+                <Media src={baseUrl + leader.image} alt={leader.name} />
+              </Media>
+              <Media body>
+                <Media heading>{leader.name}</Media>
+                <h6>{leader.designation}</h6>
+                {leader.description}
+              </Media>
+            </Media>
+          );
+        })}
+      </div>
+    );
+  }
 };
 
 function About(props) {
@@ -106,7 +122,11 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className="col-12">
-          <RenderLeader leaders={props.leaders} />
+          <RenderLeader
+            leaders={props.leaders}
+            isLoading={props.leadersLoading}
+            ErrMess={props.leadersErrMess}
+          />
         </div>
       </div>
     </div>

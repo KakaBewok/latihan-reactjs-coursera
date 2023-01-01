@@ -49,6 +49,7 @@ function RenderComments({ comments, postComment, dishId }) {
                   width: '100%',
                 }}
                 className="mb-3"
+                key={comment.id}
               >
                 <CardHeader>Comment</CardHeader>
                 <ListGroup flush>
